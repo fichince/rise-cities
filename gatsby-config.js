@@ -8,7 +8,10 @@ require("dotenv").config({
   path: `.env.${activeEnv}`,
 })
 
-const firestoreConfig = require(`./config/firebase-config.${process.env.GATSBY_FIREBASE_ENVIRONMENT}.json`)
+const firestoreConfig = 
+  process.env.FIRESTORE_CONFIG ?
+    JSON.parse(Buffer.from(process.env.FIRESTORE_CONFIG, 'base64')) :
+    require(`./config/firebase-config.${process.env.GATSBY_FIREBASE_ENVIRONMENT}.json`)
 
 module.exports = {
   siteMetadata: {
