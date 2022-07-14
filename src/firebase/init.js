@@ -4,7 +4,10 @@ import "firebase/firestore"
 import "firebase/storage"
 
 const activeEnv = process.env.GATSBY_FIREBASE_ENVIRONMENT || process.env.NODE_ENV || "development"
-const config = require(`../../config/firebase-config.${activeEnv}.json`)
+const config = 
+  process.env.FIRESTORE_CONFIG ?
+    JSON.parse(Buffer.from(process.env.FIRESTORE_CONFIG, 'base64')) :
+    require(`../../config/firebase-config.${process.env.GATSBY_FIREBASE_ENVIRONMENT}.json`)
 
 let defaultFirebase = null;
 
